@@ -1,0 +1,526 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>Hackerschool: Introduction to JavaScript</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.3/dist/reset.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.3/dist/reveal.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.3/dist/theme/black.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.3/build/styles/monokai.min.css"><style>.reveal .slides img.logo-img {
+  background: white;
+  border: 10px solid #fff;
+  border-radius: 10px;
+}
+
+.reveal:not(.overview) .slides {
+  overflow: hidden;
+}
+
+.reveal .slides .white-bg {
+  background-color: white;
+}
+
+.reveal .slides section .fragment.emph,
+.reveal .slides section .fragment.unemph,
+.reveal .slides section asciinema-player.fragment {
+  visibility: inherit;
+  opacity: 1;
+}
+
+.reveal .slides pre > code > strong:not(.red),
+.reveal .slides .fragment.unemph:not(.visible) > .fragment.emph.visible:not(.red),
+.reveal .slides :not(.unemph) > .fragment.emph.visible:not(.red) {
+  background-color: yellow;
+  color: black;
+}
+
+.reveal .slides pre > code > strong.red,
+.reveal .slides .fragment.unemph:not(.visible) > .fragment.emph.red.visible,
+.reveal .slides :not(.unemph) > .fragment.emph.red.visible {
+  background-color: red;
+  color: black;
+}
+
+.reveal pre {
+  font-size: 1em;
+  line-height: 1;
+  font-variant-ligatures: none;
+}
+
+.reveal pre code {
+  max-height: none;
+}
+
+.reveal pre .sans {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.reveal code {
+  font-variant-ligatures: none;
+}
+
+.reveal .underline {
+  text-decoration: underline;
+}
+
+.reveal pre.asciinema-terminal {
+  margin-top: 0;
+  margin-bottom: 0;
+  border: none;
+}
+
+.reveal .slides section .invisible {
+  visibility: hidden;
+}
+
+html.print-pdf .reveal pre code {
+  font-family: monospace !important;
+}
+</style></head><body><div class="reveal"><div class="slides"><style>.reveal .slides .font75 {
+  font-size: 75%;
+}
+.reveal .slides .font65 {
+  font-size: 65%;
+}</style><section><h1>Hackerschool</h1><h2>Introduction to JavaScript</h2><img class="logo-img" style="height: 5ex" src="./nushackers_svg.svg"></section><section><h2>Overview</h2><ul><li>Introduction</li><li>Basics</li><li>OOP and classes</li><li>Event loop, promises, async/await</li></ul><p>Today's focus is on <em>language features and semantics</em>. We will not really touch on the standard library.</p></section><section><h2>JavaScript?</h2><p>Created by Brendan Eich in 1995 to add interactivity to web pages in Netscape Navigator</p><p>Now one of the most popular programming languages in use.</p></section><section><h2>Resources</h2><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">Mozilla Developer Network (MDN)</a></p><p>...nothing else, really?</p><p><a href="https://262.ecma-international.org/6.0/">ECMA-262 6.0 specification</a> if you want to dive in</p></section><section><h2>Running JavaScript</h2><p>You can use the <a href="https://www.typescriptlang.org/play?noImplicitAny=false&amp;filetype=js">TypeScript playground</a> set to JavaScript mode...</p><p>or just use your browser console.</p></section><section><h1>Basics</h1></section><section><h2>Hello world</h2><pre><code class="js">console.log("Hello world!");</code></pre></section><section><h2>Expressions</h2><pre><code class="js">1; // number
+1.2; // also a number
+'string'; "string";
+true; false; // booleans
+undefined;
+null;
+/* multiline
+   comments */</code></pre></section><section><h2>Declarations (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">let</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">const</a>)</h2><pre><code class="js">const x = 1;
+x = 2; // ERROR
+let y = 1;
+y = 2; // OK
+
+{
+  const x = 2;
+  // this x shadows original x
+  let y = 1;
+  // this y also shadows original y
+}</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference#arithmetic_operators">Basic operations</a></h2><pre><code class="js">// arithmetic: all floats!
+1 + 1; 1 - 1; 1 * 2; 1 / 2; 5 % 2;
+2 ** 2;
+
+// bitwise operators
+2 & 1; 2 | 1; 2 ^ 1;
+2 &lt;&lt; 2; 2 &gt;&gt; 2; -2 &gt;&gt;&gt; 2;
+
+// comparison operators
+1 > 2; 1 < 2;
+1 >= 2; 1 <= 2;
+1 == 2; 1 != 2; // <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality#description" style="text-decoration: underline">avoid!</a>
+1 === 2; 1 !== 2;</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Increment">In</a>/<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decrement">de</a>crement</h2><pre><code class="js">let x = 0;
+x++; // returns 0, x is now 1
+++x; // returns 2, x is now 2
+x--; // returns 2, x is now 1
+--x; // returns 0, x is now 0</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy">Truthy and falsy</a></h2><p>Falsy values are: <code>false</code>, <code>0</code>, <code>-0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code></p><p>All other values are truthy.</p></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT">Boolean operations (!)</a></h2><p>Returns true if the operand is falsy, and false if the operand is truthy.</p><pre><code class="js">!false; // true
+!true; // false
+!""; // true
+!0; // true
+!"hello"; // false
+!2; // false</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND">Boolean operations (&amp;&amp;)</a></h2><p>If the first value is falsy, returns it, else returns the second value. If the second value is not returned, it is not evaluated. (Short-circuiting)</p><pre><code class="js">false &amp;&amp; true; // false
+"" &amp;&amp; true; // ""
+true &amp;&amp; true; // true
+true &amp;&amp; 0; // 0
+true &amp;&amp; "hello"; // "hello"</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR">Boolean operations (||)</a></h2><p>If the first value is truthy, returns it, else returns the second value. If the second value is not returned, it is not evaluated. (Short-circuiting)</p><pre><code class="js">false || true; // true
+"" || "hello"; // "hello"
+true || true; // true
+true || 0; // true
+true || "hello"; // true</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference#assignment_operators">Assignment operators</a></h2><pre><code class="js">let x = 0;
+x += 1; // x === 1
+x *= 2; // x === 2
+x /= 2; // x === 1
+x -= 1; // x === 0
+x ||= false; // x === false
+// etc.</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">Template literals</a></h2><pre><code class="js">let x = 1;
+`x is: ${x}`; // "x is: 1"</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Arrays</a></h2><pre><code class="js">const a = ["hello"]; // array of 1 item
+a.length // 1
+a.push("world");
+a.length // 2
+a[0] // "hello"
+a[1] // "world"
+a[2] // undefined</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Objects</a></h2><pre><code class="js">const x = { "a": 123, "b": "word",
+            "life is good!": false };
+x["a"] // 123
+x.a    // 123
+x["b"] // "word"
+x.b    // "word"
+x["whatever"]      // undefined
+x.somethingElse    // undefined
+x["life is good!"] // false
+x.life is good!    // can't do this!
+delete x["a"];</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else">If statements</a></h2><pre><code class="js">if (true) {
+  console.log("True");
+} else if (1 === 1) {
+  console.log("True too");
+} else {
+  console.log("False");
+}
+
+if (true)
+  console.log("This works too");</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">Conditional expressions</a></h2><p>aka ternary operator</p><pre><code class="js">true ? "true!" : "hmm..."; // "true!"
+false ? 0
+      : 1 ? "true 2"
+          : true ? "true 3"
+                 : "all false"; // ?</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/while">While loop</a></h2><pre><code class="js">let i = 0;
+while (i &lt; 10) {
+  console.log(i++);
+}</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for">For loop</a></h2><pre><code class="js">for (let i = 0; i &lt; 10; ++i) {
+  console.log(i);
+}</code></pre></section><section><h2>In operator</h2><pre class="font75"><code class="js">const o = {a: 1, b: 2};
+'a' in o // true
+'b' in o // true
+'asdajd' in o // false</code></pre><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in">For-in loop</a></h2><pre class="font75"><code class="js">const array = ["hello", "world", 3, 4, 5];
+for (const key in array) {
+  const v = array[key];
+  console.log(`${key} is ${v}`);
+}</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of">For-of loop</a></h2><pre class="font75"><code class="js">const array = ["hello", "world", 3, 4, 5];
+for (const v of array) {
+  console.log(v);
+}</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/break">break</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/continue">continue</a></h2><pre class="font75"><code class="js">const array = ["hello", "world", 3, 4, 5];
+for (const v of array) {
+  if (v === "world")
+    continue;
+  if (v === 4)
+    break;
+  console.log(v);
+}</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch">switch</a></h2><pre class="font75"><code class="js">switch ("abc") {
+  case 123:
+    // do stuff
+    break;
+  case "abc":
+    // do stuff
+    break;
+  default:
+    // do stuff
+    break;
+}</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">Spread operator</a></h2><pre><code class="js">const a1 = [1, 2, 3];
+const a2 = [a1, ...a1, ...a1];
+const o1 = {a: 1, b: 2}
+const o2 = {o: o1, ...o1};</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">Destructuring</a></h2><pre><code class="js">let a, b, rest;
+[a, b] = [10, 20];
+a; // 10
+b; // 20
+[a, b, ...rest] = [1, 2, 3, 4, 5];
+a; /* 1 */ b; /* 2 */
+rest; // [3, 4, 5]</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">Destructuring</a></h2><pre><code class="js">const [a, b] = [10, 20];
+a; // 10
+b; // 20
+let {c, d} = {c: 1, d: 2};
+c; // 1
+d; // 2</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Functions</a></h2><pre><code class="js">function greet(a) {
+  console.log(`Hello, ${a}!`);
+  return 5;
+}
+console.log(greet("world"));</code></pre></section><section><p>Function arity is not checked:</p><pre><code class="js">function f(a, b, c, d, e) {
+  console.log(a, b, c, d, e);
+}
+f();
+f(1);
+f(1, 2);
+f(1, 2, 3);
+f(1, 2, 3, 4);
+f(1, 2, 3, 4, 5);
+f(1, 2, 3, 4, 5, 6);</code></pre></section><section><h2>First-class functions</h2><p>Functions are values:</p><pre><code class="js">function greet(a) {
+  console.log(`Hello, ${a}!`);
+}
+function apply(f, x) {
+  f(x);
+  return f;
+}
+apply(greet, "world");
+const v = greet;
+apply(v, "world");
+apply(apply(v, "world"), "world");</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">Arrow functions</a></h2><pre><code class="js">function greet(a) {
+  console.log(`Hello, ${a}!`);
+}
+const greet2 = (a) => {
+  console.log(`Hello, ${a}!`);
+};
+const greet3 = a => {
+  // parens optional for one param
+  console.log(`Hello, ${a}!`);
+};</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">Arrow functions</a></h2><pre><code class="js">function five() {
+  return 5;
+}
+const five2 = () => 5;
+function add(a, b) {
+  return a + b;
+}
+const add2 = (a, b) => a + b;</code></pre></section><section><h2>Spread in functions</h2><pre><code class="js">function f(a, ...b) {
+  console.log(a, b);
+}
+const a = [1, 2, 3, 4, 5];
+f(...a);
+f(0, ...a);
+f(0, a);</code></pre></section><section><h2>Destructuring in functions</h2><pre><code class="js">function f([a, b], {c, d}) {
+  console.log(a, b, c, d);
+}
+f([1, 2], {c: 3, d: 4});</code></pre></section><section><h2>Exercise 0</h2><p>Fizzbuzz.</p><p>For numbers 1 to 100, print "fizz" if the number is divisible by 3, "buzz" if by 5, "fizzbuzz" if by both, else just the number.</p></section><section><pre><code class="js">for (let i = 1; i &lt;= 100; ++i) {
+  if (i % 15 === 0)
+    console.log("fizzbuzz");
+  else if (i % 3 === 0)
+    console.log("fizz");
+  else if (i % 5 === 0)
+    console.log("buzz");
+  else
+    console.log(i);
+}</code></pre></section><section><h2>Exercise 1</h2><p>Write a function that prints out its arguments like this:</p><p><code>fn(1, "hello", "bye")</code></p><pre><code class="plaintext">Number of arguments: 3
+Argument 0: 1
+Argument 1: hello
+Argument 2: bye</code></pre></section><section><pre class="font75"><code class="js">function fn(...args) {
+  console.log(`Number of arguments: ${args.length}`);
+  for (const i in args) {
+    console.log(`Argument ${i}: ${args[i]}`);
+  }
+}</code></pre></section><section><h2>?? operator</h2><p>Returns RHS if LHS is null or undefined</p><pre><code class="js">0 ?? 1; // 0
+null ?? 1; // 1
+undefined ?? 1; // 1</code></pre></section><section><h2>?. operator</h2><pre><code class="js">const o = { a: { b: 1 } };
+const p = {};
+const q = undefined;
+o?.a?.b; // 1
+p?.a?.b; // undefined
+q?.a?.b; // undefined
+p.a.b;   // error
+q.a.b;   // error</code></pre></section><section><h2>JavaScript types</h2><p>undefined, boolean, number, string, function, object, symbol</p><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">typeof</a></h2><pre><code class="js">typeof undefined // 'undefined'
+typeof false // 'boolean'
+typeof 1 // 'number'
+typeof "" // 'string'
+typeof (() => false) // 'function'
+typeof ({}) // 'object'</code></pre></section><section><h1>OOP and classes</h1></section><section><h2>Objects</h2><p>We can make objects already:</p><pre><code class="js">const dog = {
+  name: "Buster",
+  age: 3,
+  bark: function() {
+    console.log(`${this.name} barks`);
+  }
+};
+dog.bark();</code></pre></section><section><h2>Objects</h2><p>We could extract this into a function:</p><pre><code class="js">const makeDog = (name, age) => ({
+  name, age,
+  bark() {
+    console.log(`${this.name} barks`);
+  }
+});
+const dog = makeDog("Buster", 3);
+dog.bark();</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">Classes</a></h2><p>Instead of what we did, JavaScript has classes:</p><pre class="font75"><code class="js">class Dog {
+  name; age;
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  bark() {
+    console.log(`${this.name} barks`);
+  }
+}
+const dog = new Dog("Buster", 3);
+dog.bark();</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#field_declarations">Private fields</a></h2><pre class="font75"><code class="js">class Dog {
+  name; age; #trueName;
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+    this.#trueName = name + "too";
+  }
+  bark() {
+    console.log(`${this.name} barks`);
+  }
+}
+const dog = new Dog("Buster", 3);
+dog.trueName; // undefined
+dog.#trueName; // error</code></pre></section><section><h2>Private methods</h2><pre class="font75"><code class="js">class Dog {
+  name; age;
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  #bark() {
+    console.log(`${this.name} barks`);
+  }
+  publicBark() { this.#bark(); }
+}
+const dog = new Dog("Buster", 3);
+dog.publicBark();
+dog.bark(); // error
+dog.#bark(); // error</code></pre></section><section><h2>Inheritance</h2><pre class="font65"><code class="js">class Animal {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  makeNoise() {
+    console.log(`${this.name} makes noise`);
+  }
+}
+class Dog extends Animal {
+  constructor(name, age) {
+    super(name, age); // must call superclass ctor
+    // do other setup...
+    // otherwise this constructor is entirely optional
+  }
+  makeNoise() { console.log(`${this.name} barks`); }
+}
+const dog = new Dog("Buster", 3);
+dog.makeNoise();</code></pre></section><section><h2>Inheritance</h2><p>Use <code>super</code> to specifically access superclass values:</p><pre class="font65"><code class="js">class Animal {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  makeNoise() {
+    console.log(`${this.name} makes noise`);
+  }
+}
+class Dog extends Animal {
+  makeNoise() {
+    super.makeNoise();
+    console.log(`${this.name} barks too!`);
+  }
+}
+const dog = new Dog("Buster", 3);
+dog.makeNoise();</code></pre></section><section><h2>Static properties</h2><pre class="font65"><code class="js">class Point {
+  x; y;
+  constructor(x, y) { this.x = x; this.y = y; }
+  static whatever = "I ran out of ideas";
+  static distance(a, b) {
+    return Math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2);
+  }
+}
+const a = new Point(0, 0);
+const b = new Point(3, 4);
+Point.distance(a, b); // 5
+Point.whatever // "I ran out of ideas"
+a.distance; // undefined
+a.whatever; // undefined</code></pre></section><section><h2>Distinguishing classes</h2><pre><code class="js">class Animal {}
+class Dog extends Animal {}
+const a = new Animal();
+const d = new Dog();
+typeof a; // 'object'
+typeof d; // 'object'</code></pre><p>Oh no!</p></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof">instanceof</a></h2><pre><code class="js">class Animal {}
+class Dog extends Animal {}
+const a = new Animal();
+const d = new Dog();
+a instanceof Animal; // true
+a instanceof Dog; // false
+d instanceof Animal; // true
+d instanceof Dog; // true</code></pre></section><section><h2>Passing methods around</h2><pre class="font65"><code class="js">class Dog {
+  name;
+  constructor(name) { this.name = name; }
+  bark() { console.log(`${this.name} barks`); }
+}
+const d = new Dog("Buster");
+d.bark(); // ok
+const b = d.bark;
+b(); // breaks!</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind">Binding <code>this</code></a></h2><pre class="font65"><code class="js">class Dog {
+  name;
+  constructor(name) { this.name = name; }
+  bark() { console.log(`${this.name} barks`); }
+}
+const d = new Dog("Buster");
+d.bark(); // ok
+const b = d.bark.bind(d);
+b(); // ok</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch">Try-catch</a></h2><pre class="font65"><code class="js">function doWork() {
+  throw new Error("Error!");
+}
+try {
+  console.log("Doing work...");
+  doWork();
+  console.log("Done work!");
+} catch (error) {
+  console.error("Got error", error);
+}</code></pre></section><section><h2>Exercise 2</h2><p>Make a Shape class, which has a name property, and area and perimeter methods that just throw Errors.</p><p>Make Rectangle and Circle subclasses that implement those methods.</p><p>You may need <code>Math.PI</code>.</p></section><section><pre class="font65"><code class="js">class Shape {
+  name; constructor(name) { this.name = name; }
+  area() { throw new Error("Not implemented"); }
+  perimeter() { throw new Error("Not implemented"); }
+}
+class Rectangle extends Shape {
+  a; b;
+  constructor(a, b) {
+    super("Rectangle");
+    this.a = a; this.b = b;
+  }
+  area() { return this.a * this.b; }
+  perimeter() { return this.a * 2 + this.b * 2; }
+}
+class Circle extends Shape {
+  r;
+  constructor(r) {
+    super("Circle");
+    this.r = r;
+  }
+  area() { return Math.PI * this.r**2;}
+  perimeter() { return 2 * Math.PI * this.r; }
+}</code></pre></section><section><h1>Asynchronous programming</h1></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout"><code>setTimeout</code></a></h2><pre><code class="js">setTimeout(() => {
+  console.log("Hello!");
+}, 1000);</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop#event_loop">Event loop</a></h2><p>The JavaScript event loop is essentially:</p><pre><code class="js">while (queue.waitForEvent()) {
+  queue.processNextEvent();
+}</code></pre><p>How does <code>setTimeout</code> work?</p><p>After the timeout, the callback is simply added to the queue and processed!</p></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promises</a></h2><p>A Promise is a way to model a value that will only be known in the future.</p><pre class="font75"><code class="js">new Promise(() => {
+  console.log("Promise run!");
+});
+console.log("Outside the promise.");</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#chained_promises">Then</a></h2><pre class="font75"><code class="js">new Promise(resolve => {
+  console.log("Promise run!");
+  setTimeout(() => {
+    resolve("Some work was done");
+  }, 1000);
+}).then(result => {
+  console.log(result);
+});
+console.log("Outside the promise.");</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#chained_promises">Handling errors</a></h2><pre class="font75"><code class="js">new Promise((resolve, reject) => {
+  console.log("Promise run!");
+  setTimeout(() => {
+    reject("Ran into an error!");
+  }, 1000);
+}).then(result => {
+  console.log(result);
+}).catch(error => {
+  console.error(error);
+})
+console.log("Outside the promise.");</code></pre></section><section><h2><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">fetch</a></h2><p>We'll use <code>fetch</code> as a real-world example.</p><pre class="font75"><code class="js">fetch("https://api.github.com/orgs/nushackers")
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.name);
+  });
+console.log("This comes first!");</code></pre></section><section><h2>Async/await</h2><p>Writing chained .then()s is cumbersome!</p><pre class="font75"><code class="js">function pause(ms) {
+  return new Promise((resolve) =>
+    { setTimeout(resolve, 1000); });
+}
+async function doIt() {
+  console.log("Waiting...");
+  await pause(1000);
+  console.log("Waited!");
+}
+doIt();
+console.log("After doIt!");</code></pre></section><section><h2>Error handling</h2><pre class="font65"><code class="js">function doWork() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject("Ran into an error!");
+    }, 1000);
+  });
+}
+async function getWork() {
+  console.log("Getting work...");
+  try {
+    const result = await doWork(1000);
+    console.log("Got result: " + result);
+  } catch (error) {
+    console.log("Got error: " + error);
+  }
+  console.log("Done!");
+}
+getWork();
+console.log("After getWork!");</code></pre></section><section><h2>Exercise 3</h2><p>Convert the fetch example from earlier into async/await.</p></section><section><pre class="font65"><code class="js">async function getOrgName(name) {
+  try {
+    const response =
+      await fetch("https://api.github.com/orgs/" + name);
+    const data = await response.json();
+    return data.name;
+  } catch (error) {
+    console.error(error);
+  }
+}
+async function main() {
+  const name = await getOrgName("nushackers");
+  console.log("Got name: " + name);
+}
+main();</code></pre></section><section><h2>What next?</h2><p>Read <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript">MDN's re-introduction to JavaScript</a></p><p>Try out <a href="https://nodejs.dev/learn">Node.js</a></p><p><a href="https://forms.gle/6KrizBEZUaWPaJ236">Join our HTML/CSS</a> and React workshops in the next two weeks!</p></section><section><h2>Thank you</h2></section></div></div><script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.3/build/highlight.min.js"></script><script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script><script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.3/dist/reveal.js"></script><script src="./reveal-highlight-v4.js"></script><script>Reveal.initialize({
+  plugins: [ RevealHighlight ],
+  slideNumber: true,
+  fragmentInURL: true,
+  transitionSpeed: "fast",
+  // center: false,
+  hash: true,
+  navigationMode: "linear",
+  transition: "fade",
+  pdfSeparateFragments: false,
+  highlight: {
+    escapeHTML: false
+  }
+});</script></body></html>
